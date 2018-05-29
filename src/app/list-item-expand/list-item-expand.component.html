@@ -1,0 +1,9 @@
+<mat-list-item (click)="toggle()">
+  <mat-icon mat-list-icon>{{ expanded ? 'expand_less' : 'expand_more' }}</mat-icon>
+
+  <h4 mat-line *ngIf="header">{{ header }}</h4>
+</mat-list-item>
+
+<mat-nav-list *ngIf="expanded">
+  <ng-content></ng-content>
+</mat-nav-list>

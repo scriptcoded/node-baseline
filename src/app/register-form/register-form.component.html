@@ -1,0 +1,57 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-card-content>
+    <div class="container">
+      <mat-form-field>
+        <input matInput type="text" formControlName="givenName" placeholder="Förnamn">
+
+        <mat-error *ngIf="givenName.touched && givenName.invalid">
+          <div *ngIf="givenName.errors?.required">Ange ditt förnamn</div>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" formControlName="familyName" placeholder="Efternamn">
+
+        <mat-error *ngIf="familyName.touched && familyName.invalid">
+          <div *ngIf="familyName.errors?.required">Ange ditt förnamn</div>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="full-width">
+      <input matInput type="email" formControlName="email" placeholder="E-post">
+
+      <mat-error *ngIf="email.touched && email.invalid">
+        <div *ngIf="email.errors?.required">Ange en e-postadress</div>
+
+        <div *ngIf="!email.errors?.required && email.errors?.email">Felaktigt format</div>
+
+        <div *ngIf="!email.errors?.required && email.errors?.unavailable">Denna e-postadress används redan</div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" placeholder="Lösenord">
+
+      <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+
+      <mat-error *ngIf="password.touched && password.invalid">
+        <div *ngIf="password.errors?.required">Ange ett lösenord</div>
+
+        <div *ngIf="password.errors?.minlength">Ditt lösenord måste vara minst 8 tecken långt</div>
+
+        <div *ngIf="password.errors?.mustContainLowercase">Ditt lösenord måste innehålla minst en liten bokstav</div>
+
+        <div *ngIf="password.errors?.mustContainUppercase">Ditt lösenord måste innehålla minst en stor bokstav</div>
+
+        <div *ngIf="password.errors?.mustContainNonAlphabetical">Ditt lösenord måste innehålla minst ett icke-alfabetiskt tecken</div>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="tos">Jag accepterar <a href="#">användarvillkoren</a></mat-checkbox>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-button type="submit" class="float-right" [disabled]="form.invalid || loading">Skapa konto</button>
+  </mat-card-actions>
+</form>

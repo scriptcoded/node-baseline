@@ -1,0 +1,23 @@
+<mat-toolbar color="primary" class="mat-elevation-z3">
+  <button mat-icon-button (click)="toggleSidenav()">
+    <mat-icon aria-label="Användare">menu</mat-icon>
+  </button>
+
+  <span class="brand">{{ brand }}</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon aria-label="Användare">account_circle</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <span>Inställningar</span>
+    </button>
+
+    <button mat-menu-item>
+      <span>Logga ut</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

@@ -1,0 +1,14 @@
+.activate-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+.activate-container .logo {
+  margin-bottom: 20px;
+}
+
+.activate-container .logo img {
+  display: block;
+  width: 100px;
+}

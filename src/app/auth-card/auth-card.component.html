@@ -1,0 +1,13 @@
+<div class="auth-card-container">
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
+  <mat-card class="auth-card">
+    <mat-card-content class="error" *ngIf="errors && errors.length != 0">
+      <span *ngFor="let error of errors">{{ error }}<br></span>
+    </mat-card-content>
+
+    <mat-card-title *ngIf="header">{{ header }}</mat-card-title>
+
+    <ng-content></ng-content>
+  </mat-card>
+</div>

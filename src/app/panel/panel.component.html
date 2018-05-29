@@ -1,0 +1,67 @@
+<mat-toolbar color="primary" class="mat-elevation-z3">
+  <button mat-icon-button (click)="toggle()">
+    <mat-icon aria-label="Användare">menu</mat-icon>
+  </button>
+
+  <span class="brand">Organisation</span>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon aria-label="Användare">account_circle</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <span>Hantera konto</span>
+    </button>
+
+    <button mat-menu-item (click)="logout()">
+      <span>Logga ut</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-sidenav-container (backdropClick)="toggle()">
+  <mat-sidenav [mode]="mode" [opened]="opened" (keydown.escape)="toggle()">
+    <mat-nav-list>
+      <mat-list-item role="navigation" [class.active]="active == '/' || active == '/dashboard'" routerLink="./dashboard">
+        <mat-icon mat-list-icon>dashboard</mat-icon>
+
+        <h4 mat-line>Överblick</h4>
+      </mat-list-item>
+
+      <list-item-expand header="Användare">
+        <mat-list-item role="navigation" [class.active]="active == '/users'" routerLink="./users">
+          <h5 mat-line>Alla användare</h5>
+        </mat-list-item>
+
+        <mat-list-item role="navigation" [class.active]="active == '/users/create'" routerLink="./users/create">
+          <h5 mat-line>Skapa användare</h5>
+        </mat-list-item>
+      </list-item-expand>
+
+      <list-item-expand header="Schema">
+        <mat-list-item role="navigation" [class.active]="active == '/schedule'" routerLink="./schedule">
+          <h5 mat-line>Alla scheman</h5>
+        </mat-list-item>
+
+        <mat-list-item role="navigation" [class.active]="active == '/schedule/create'" routerLink="./schedule/create">
+          <h5 mat-line>Skapa schema</h5>
+        </mat-list-item>
+      </list-item-expand>
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item>
+        <mat-icon mat-list-icon>settings</mat-icon>
+
+        <h4 mat-line>Inställningar</h4>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

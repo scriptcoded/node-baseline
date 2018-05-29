@@ -1,0 +1,21 @@
+<mat-card>
+  <img [src]="src" mat-card-image>
+
+  <mat-card-actions>
+    <button mat-icon-button [matMenuTriggerFor]="more">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+
+    <mat-menu #more="matMenu">
+      <button mat-menu-item>
+        <span>Hantera organisation</span>
+      </button>
+
+      <button mat-menu-item>
+        <span>Rapportera problem</span>
+      </button>
+    </mat-menu>
+
+    <button mat-button class="float-right">Öppna</button>
+  </mat-card-actions>
+</mat-card>
