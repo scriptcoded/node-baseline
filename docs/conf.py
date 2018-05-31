@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Node Baseline'
-copyright = "2018, Malcolm Nihl\u00E9n"
-author = "Malcolm Nihl\u00E9n"
+copyright = "2018, Malcolm Nihlu'\u00E9'n"
+author = "Malcolm Nihlu'\u00E9'n"
 
 # The short X.Y version
 version = ''
@@ -129,7 +129,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'NodeBaseline.tex', 'Node Baseline Documentation',
-     "Malcolm Nihl\u00E9n", 'manual'),
+     "Malcolm Nihlu'\u00E9'n", 'manual'),
 ]
 
 
