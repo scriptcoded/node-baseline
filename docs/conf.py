@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Node Baseline'
-copyright = '2018, Malcolm Nihlén'
-author = 'Malcolm Nihlén'
+copyright = '2018, Malcolm Nihlu"\u00E9"n'
+author = 'Malcolm Nihlu"\u00E9"n'
 
 # The short X.Y version
 version = ''
