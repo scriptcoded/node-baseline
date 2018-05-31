@@ -129,7 +129,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'NodeBaseline.tex', 'Node Baseline Documentation',
-     'Malcolm Nihlén', 'manual'),
+     'Malcolm Nihlu"\u00E9"n', 'manual'),
 ]
 
 
