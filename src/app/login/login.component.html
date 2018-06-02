@@ -1,9 +1,0 @@
-<div class="login-container">
-  <div class="logo">
-    <img src="/assets/logo.png" alt="ELMA">
-  </div>
-
-  <app-auth-card header="Logga in" [loading]="loading" [errors]="errors">
-    <app-login-form (loadingState)="loading = $event" (errorMessage)="errors = $event"></app-login-form>
-  </app-auth-card>
-</div>

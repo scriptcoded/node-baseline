@@ -1,9 +1,0 @@
-<div class="activate-container">
-  <div class="logo">
-    <img src="/assets/logo.png" alt="ELMA">
-  </div>
-
-  <app-auth-card header="Aktivera konto" [loading]="loading" [errors]="errors">
-    <app-activate-account-form (loadingState)="loading = $event" (errorMessage)="errors = $event"></app-activate-account-form>
-  </app-auth-card>
-</div>

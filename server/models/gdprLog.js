@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+/**
+ * Schema for GDPR logs
+ */
 var gdprLogSchema = new mongoose.Schema({
   user: Object,
   location: String,

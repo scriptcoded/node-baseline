@@ -171,9 +171,9 @@ module.exports.register = [
         },
         done => {
           /**
-           * Activation link. Might be smart to save format in config.
+           * Activation link
            */
-          let activationLink = `http://${req.headers.host}/activate/${user.email}/${user.emailVerificationToken}`
+          let activationLink = config.email.activationLink.format(user.email, user.emailVerificationToken)
 
           /**
            * Send activation email. Uses email helper method.
@@ -369,7 +369,7 @@ module.exports.sendPasswordLink = [
            */
           email.getTemplate('password/reset', {
             name: user.name.givenName,
-            resetLink: `http://${req.headers.host}/reset/${user.email}/${token}`,
+            resetLink: config.email.resetPasswordLink.format(user.email, token),
             contactEmail: 'test@example.com',
             contactWebsite: 'https://example.com/',
             contactWebsitePretty: 'example.com',

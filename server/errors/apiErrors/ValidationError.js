@@ -1,3 +1,7 @@
+
+/**
+ * Validation error. The request was invalid.
+ */
 module.exports = class ValidationError extends require('./ApiError') {
   constructor (message, errors = []) {
     super(message || 'Malformed request', 400)

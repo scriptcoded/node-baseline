@@ -45,4 +45,10 @@ Thumbs.db
 # Environment variables
 .env
 
+# Logs. Add any additional log folders here if you're going to use Git.
 server/logs
+
+# Generated documentation
+docs/_build
+docs/_static
+docs/_templates

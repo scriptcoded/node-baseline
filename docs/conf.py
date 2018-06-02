@@ -19,7 +19,8 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Node Baseline'
+project = 'Script_Coded\'s Node Baseline'
+project_short = 'SC\'s Baseline'
 copyright = u'2018, Malcolm Nihlén'
 author = u'Malcolm Nihlén'
 
@@ -80,7 +81,13 @@ html_theme = 'sphinx_rtd_theme'
 # further.  For a list of options available for each theme, see the
 # documentation.
 #
-# html_theme_options = {}
+html_theme_options = {
+    'logo_only': True
+}
+
+html_logo = "logo_light.svg"
+
+html_favicon = "favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -153,3 +160,9 @@ texinfo_documents = [
      author, 'NodeBaseline', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+
+rst_epilog = (
+    '.. |project| replace:: %s' % project + '\n' +
+    '.. |project_s| replace:: %s' % project_short
+)

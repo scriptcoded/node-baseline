@@ -2,16 +2,31 @@ const fs = require('fs')
 const path = require('path')
 const readline = require('readline')
 
+/**
+ * Validates the .env file and checks it against .env.example
+ * 
+ * @param {*} envPath Path to the .env file
+ * @param {*} examplePath Path to the .env.example file
+ */
 module.exports.validateEnvFile = (envPath, examplePath) => {
   return new Promise((resolve, reject) => {
 
     let requiredKeys = []
+    /**
+     * Variables already in environment
+     */
     let foundKeys = new Set(Object.keys(process.env))
 
+    /**
+     * Create reader for the example file
+     */
     let exampleReader = readline.createInterface({
       input: fs.createReadStream(examplePath)
     })
 
+    /**
+     * Load .env.example lines into requiredKeys
+     */
     exampleReader.on('line', line => {
       let key = line.split('=')[0]
 
@@ -20,11 +35,17 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
       }
     })
 
+    /**
+     * When finished, check .env file
+     */
     exampleReader.on('close', () => {
       let envReader = readline.createInterface({
         input: fs.createReadStream(envPath)
       })
   
+      /**
+       * Load .env lines into foundKeys
+       */
       envReader.on('line', line => {
         let parts = line.split('=')
 
@@ -37,12 +58,18 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
         }
       })
   
+      /**
+       * When finished, make sure that all required keys were found
+       */
       envReader.on('close', () => {
         
         var missingKeys = requiredKeys.filter(item => {
           return !foundKeys.has(item);
         })
 
+        /**
+         * If not all required keys found, throw an error
+         */
         if (missingKeys.length) {
           return reject(new Error(`Missing variables in .env: '${missingKeys.join("', '")}'`))
         }
@@ -53,6 +80,10 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
   })
 }
 
+/**
+ * Shorthand for validating env files. Also makes
+ * sure that .env and .env.example exists.
+ */
 module.exports.validateEnv = () => {
   let envPath = path.resolve('./.env')
   let examplePath = path.resolve('./.env.example')

@@ -1,1 +1,1 @@
-# Node base for REST 
+# Node base for robust applications

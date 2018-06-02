@@ -64,7 +64,7 @@ jobs:
       - checkout
       - add_ssh_keys:  # add key from CircleCI account based on fingerprint
           fingerprints:
-            - "ec:2a:93:d3:0d:89:e1:5b:b2:a3:f8:92:73:cf:b9:36"
+            - ""
       - run:
           name: Run Setup Script
           command: bash .circleci/setup-heroku.sh
