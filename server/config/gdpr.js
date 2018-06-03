@@ -2,7 +2,7 @@ const bunyan = require('bunyan')
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
-const shell = require('shell')
+const shell = require('shelljs')
 const config = require('./config')
 
 const GDPRLog = require('../models/gdprLog')

@@ -1,7 +1,7 @@
 const bunyan = require('bunyan')
 const fs = require('fs')
 const path = require('path')
-const shell = require('shell')
+const shell = require('shelljs')
 const config = require('./config')
 
 const logsDir = config.logsDir
