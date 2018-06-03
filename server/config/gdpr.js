@@ -2,6 +2,7 @@ const bunyan = require('bunyan')
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
+const shell = require('shell')
 const config = require('./config')
 
 const GDPRLog = require('../models/gdprLog')
@@ -22,7 +23,7 @@ const logsDir = config.logsDir
  * Create logsDir if not already present
  */
 if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir)
+  shell.mkdir('-p', logsDir)
 }
 
 /**

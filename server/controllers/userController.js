@@ -2,7 +2,7 @@ const { param } = require('express-validator/check')
 const formidable = require('formidable')
 const path = require('path')
 const fs = require('fs')
-const fx = require('mkdir-recursive')
+const shell = require('shelljs')
 
 const User = require('../models/user')
 
@@ -15,7 +15,7 @@ const { NotFoundError, ValidationError } = require('../errors/apiErrors/apiError
 const avatarDir = path.resolve('./uploads/avatars')
 
 if (!fs.existsSync(avatarDir)) {
-  fx.mkdirSync(avatarDir)
+  shell.mkdir('-p', avatarDir)
 }
 
 module.exports.show = [

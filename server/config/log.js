@@ -1,6 +1,7 @@
 const bunyan = require('bunyan')
 const fs = require('fs')
 const path = require('path')
+const shell = require('shell')
 const config = require('./config')
 
 const logsDir = config.logsDir
@@ -9,7 +10,7 @@ const logsDir = config.logsDir
  * Create logs dir if not present
  */
 if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir)
+  shell.mkdir('-p', logsDir)
 }
 
 let log

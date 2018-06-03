@@ -6,11 +6,9 @@
     "start": "node ./server.js | .\\node_modules\\.bin\\bunyan",
     "start-prod": "node ./server.js | ./node_modules/.bin/bunyan",
     "start-qa": "export DEBUG=elma-core:* & node ./server.js | ./node_modules/.bin/bunyan",
-
     "dev": "run-script-os",
     "dev:linux:darwin": "DEBUG=elma-core:* & nodemon ./server.js | ./node_modules/.bin/bunyan",
     "dev:win32": "SET DEBUG=elma-core:* & nodemon ./server.js | .\\node_modules\\.bin\\bunyan",
-
     "test": "run-script-os",
     "test:linux:darwin": "standard && export NODE_ENV=test ./node_modules/.bin/mocha --reporter spec | .\\node_modules\\.bin\\bunyan",
     "test:win32": "standard && set NODE_ENV=test&& .\\node_modules\\.bin\\mocha --exit --reporter spec"
@@ -44,7 +42,6 @@
     "jsonwebtoken": "^8.1.1",
     "jwt-decode": "^2.2.0",
     "material-design-icons": "^3.0.1",
-    "mkdir-recursive": "^0.4.0",
     "mocha": "^5.0.5",
     "moment": "^2.22.0",
     "mongoose": "^5.0.4",
