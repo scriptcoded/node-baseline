@@ -1,6 +1,4 @@
-const { body, param, validationResult } = require('express-validator/check')
-const { sanitizeBody } = require('express-validator/filter')
-const mongoose = require('mongoose')
+const { param } = require('express-validator/check')
 const formidable = require('formidable')
 const path = require('path')
 const fs = require('fs')
@@ -8,15 +6,12 @@ const fx = require('mkdir-recursive')
 
 const User = require('../models/user')
 
-const log = require('../config/log')
 const { send } = require('../helpers/response')
-const protected = require('../middleware/protected')
+const protect = require('../middleware/protect')
 const sendValidationErrors = require('../middleware/sendValidationErrors')
 const validId = require('../middleware/validId')
 
-const { NotFoundError, ValidationError, ServerError } = require('../errors/apiErrors/apiErrors')
-const FieldError = require('../errors/FieldError')
-
+const { NotFoundError, ValidationError } = require('../errors/apiErrors/apiErrors')
 const avatarDir = path.resolve('./uploads/avatars')
 
 if (!fs.existsSync(avatarDir)) {
@@ -25,7 +20,7 @@ if (!fs.existsSync(avatarDir)) {
 
 module.exports.show = [
 
-  protected(true),
+  protect(true),
 
   param('id')
     .isLength({ min: 1 }).withMessage({ code: 'required', text: 'ID is required' }),
@@ -35,17 +30,15 @@ module.exports.show = [
   validId(),
 
   (req, res, next) => {
-
     User.findById(req.params.id, (err, user) => {
       if (err) { return next(err) }
 
       if (!user) {
-        return next(new NotFoundError)
+        return next(new NotFoundError())
       }
 
       send(res, 200, user.toJson())
     })
-
   }
 ]
 
@@ -59,12 +52,11 @@ module.exports.getAvatar = [
   validId(),
 
   (req, res, next) => {
-
     User.findById(req.params.id, (err, user) => {
       if (err) { return next(err) }
 
       if (!user) {
-        return next(new NotFoundError)
+        return next(new NotFoundError())
       }
 
       res.sendFile(user.avatarPath)
@@ -77,25 +69,26 @@ module.exports.updateAvatar = [
   sendValidationErrors(),
 
   (req, res, next) => {
-
     User.findById(req.params.id, (err, user) => {
       if (err) { return next(err) }
 
       if (!user) {
-        return next(new NotFoundError)
+        return next(new NotFoundError())
       }
 
       let form = new formidable.IncomingForm()
       let avatarPath = path.join(avatarDir, user._id.toString())
 
       form.parse(req, (err, fields, files) => {
+        if (err) { return next(err) }
+
         if (!files.avatar) {
           return next(new ValidationError())
         }
       })
 
       form.on('fileBegin', (name, file) => {
-        if (name == 'avatar') {
+        if (name === 'avatar') {
           switch (file.type) {
             case 'image/jpeg':
               avatarPath += '.jpg'
@@ -105,7 +98,6 @@ module.exports.updateAvatar = [
               break
             default:
               return next(ValidationError())
-              break
           }
 
           file.path = avatarPath

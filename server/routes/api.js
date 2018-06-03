@@ -1,10 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const debug = require('debug')('elma-core:api')
 
 const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
-const organisationController = require('../controllers/organisationController')
 const metaController = require('../controllers/metaController')
 
 const { NotFoundError } = require('../errors/apiErrors/apiErrors')
@@ -14,9 +12,6 @@ const { NotFoundError } = require('../errors/apiErrors/apiErrors')
  * If the file grows to large, feel free to
  * split it into multiple smaller files
  */
-
-
-
 
 /**
  * Any routes except the ones listed in
@@ -28,7 +23,7 @@ const noAuthRoutes = [
   '/reset',
   '/reset/set',
   '/activate',
-  '/activate/resend',
+  '/activate/resend'
 ]
 /**
  * Same as noAuthRoutes, but with regex
@@ -42,14 +37,13 @@ const noAuthRoutesRegex = [
  * Routes are defined within this export.
  */
 module.exports = app => {
-
   /**
    * Below here are all the route definitions.
    * Note that you always should place logic inside controllers.
    * The only exeptions are redirects or other simple methods.
    * If you are dealing with a lot of redirects (or similar),
    * consider writing middleware for that.
-   * 
+   *
    * If possible, categorize routes after type, as done below.
    */
 
@@ -82,7 +76,7 @@ module.exports = app => {
    * Serving of terms of service documents
    */
   router.get('/tos/:version?', metaController.tos)
-  
+
   /**
    * Catch all and return 404 if no route matches.
    */
@@ -90,13 +84,9 @@ module.exports = app => {
     throw new NotFoundError()
   })
 
-
-
   /**
    * Feel free to add additional routes
    */
-
-
 
   /**
    * Returns the router object and the routes
@@ -105,6 +95,6 @@ module.exports = app => {
   return {
     router: router,
     noAuthRoutes: noAuthRoutes,
-    noAuthRoutesRegex: noAuthRoutesRegex,
+    noAuthRoutesRegex: noAuthRoutesRegex
   }
 }

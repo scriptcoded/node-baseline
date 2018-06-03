@@ -79,7 +79,7 @@ const api = require('./server/routes/api')(app)
 
 /**
  * Routes that should not have any type of authentication.
- * 
+ *
  * Joins the following:
  * - api.noAuthRoutes (also prepends apiUrl)
  * - api.noAuthRoutesRegex
@@ -92,14 +92,14 @@ const noAuthRoutes = [].concat(
   api.noAuthRoutesRegex,
   [
     /^(?!\/api.*$).*/i
-  ],
+  ]
 )
 
 /**
  * Initialize passport
  */
 const passport = require('passport')
-app.use(passport.initialize());
+app.use(passport.initialize())
 
 /**
  * Parsers for POST data
@@ -115,7 +115,7 @@ app.use('/email/static/*', (req, res, next) => {
   next(new NotFoundError())
 })
 
-/** 
+/**
  * Point static path to dist (frontend library)
  */
 app.use(express.static(path.join(__dirname, 'dist')))
@@ -125,7 +125,7 @@ app.use(express.static(path.join(__dirname, 'dist')))
  */
 app.use(jwt({
   secret: process.env.APP_KEY,
-  requestProperty: 'auth',
+  requestProperty: 'auth'
 }).unless({
   path: noAuthRoutes
 }))
@@ -177,7 +177,7 @@ server.listen(port, () => console.log(`API running on localhost:${port}`))
  */
 process.on('unhandledRejection', err => {
   log.error('Unhandled rejection: ' + err)
-});
+})
 
 /**
  * Catch all errors and return proper JSON responses

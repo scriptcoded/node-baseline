@@ -1,7 +1,8 @@
 const { validator } = require('express-validator/check')
+const path = require('path')
 
 /**
- * Custom validators for express-validator 
+ * Custom validators for express-validator
  */
 module.exports = app => {
   app.use(validator({
@@ -9,9 +10,9 @@ module.exports = app => {
       /**
        * File extension is .pdf
        */
-      isPDF: function(value, filename) {
+      isPDF: function (value, filename) {
         var extension = (path.extname(filename)).toLowerCase()
-        return extension == '.pdf'
+        return extension === '.pdf'
       }
     }
   }))

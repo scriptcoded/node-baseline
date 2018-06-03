@@ -7,7 +7,6 @@ const UnauthorizedError = require('express-jwt').UnauthorizedError
  * Handles API errors. Should be called from the entry file.
  */
 module.exports = (err, req, res, next) => {
-  
   /**
    * Are we in a production environment
    */
@@ -16,14 +15,13 @@ module.exports = (err, req, res, next) => {
   /**
    * Error logging
    */
-  let status = err.status || 500;
+  let status = err.status || 500
   if (status >= 500) {
     /**
      * Log 5xx as errors
      */
     log.error(err)
-  }
-  else if (status >= 400 && process.env.NODE_ENV !== 'production') {
+  } else if (status >= 400 && process.env.NODE_ENV !== 'production') {
     /**
      * If not in production, log 4xx as warnings
      */
@@ -62,7 +60,7 @@ module.exports = (err, req, res, next) => {
     errorObject = {
       name: serverError.name,
       message: serverError.message,
-      errors: {},
+      errors: {}
     }
   }
 

@@ -1,8 +1,6 @@
-const { validationResult } = require('express-validator/check')
-
 /**
  * Stringifies an array of errors. Good for debugging.
- * 
+ *
  * @param {*} errors An array of errors
  */
 module.exports.errorsToText = errors => {
@@ -18,7 +16,7 @@ module.exports.errorsToText = errors => {
     if (errors[key].msg.text) {
       errorTexts.push(errors[key].msg.text.toLowerCase())
     } else {
-      if (typeof errors[key].msg === "string") {
+      if (typeof errors[key].msg === 'string') {
         errorTexts.push(errors[key].msg.toLowerCase())
       }
     }
@@ -46,6 +44,6 @@ module.exports.errorsToText = errors => {
 module.exports.spreadErrors = errors => {
   return [
     'Some fields are incorrect: ' + module.exports.errorsToText(errors),
-    errors,
+    errors
   ]
 }

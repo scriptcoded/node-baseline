@@ -1,6 +1,5 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
-const mongoose = require('mongoose')
 const User = require('../models/user')
 
 /**
@@ -13,7 +12,6 @@ passport.use(new LocalStrategy(
   },
 
   function (email, password, done) {
-
     /**
      * Find user
      */
@@ -33,7 +31,7 @@ passport.use(new LocalStrategy(
           message: 'Password is wrong'
         })
       }
-      
+
       // If credentials are correct, return the user object
       return done(null, user)
     })

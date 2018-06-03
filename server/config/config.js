@@ -5,15 +5,17 @@ module.exports = {
 
   email: {
     /**
-     * - {0}: User email
-     * - {1}: Verification token
+     * - {0}: req.readers.host
+     * - {1}: User email
+     * - {2}: Verification token
      */
-    activationLink: `http://${req.headers.host}/activate/{0}/{1}`,
+    activationLink: `http://{0}/activate/{1}/{2}`,
 
     /**
-     * - {0}: User email
-     * - {1}: Reset token
+     * - {0}: req.readers.host
+     * - {1}: User email
+     * - {2}: Reset token
      */
-    resetPasswordLink: `http://${req.headers.host}/reset/{0}/{1}`,
+    resetPasswordLink: `http://{0}/reset/{1}/{2}`
   }
 }

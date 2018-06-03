@@ -3,8 +3,7 @@
  * General API error
  */
 module.exports = class AppError extends Error {
-  constructor(message, status) {
-
+  constructor (message, status) {
     /**
      * Calling parent constructor of base Error class.
      */
@@ -30,6 +29,5 @@ module.exports = class AppError extends Error {
      * Default status code, 500
      */
     this.status = status || 500
-
   }
 }

@@ -1,14 +1,13 @@
 const { UnauthorizedError, NotFoundError } = require('../errors/apiErrors/apiErrors')
 
 /**
- * 
- * 
+ * Limits the access to a certain route. Used at e.g. profile pages
+ *
  * @param {Boolean} allowAdmin     Allow admin access to page. Defaults to `false`
  * @param {String}  [propName]     What property to look for to find the user ID
  * @param {String}  [propLocation] Where to find the property
  */
 module.exports = (allowAdmin = false, propName = 'id', propLocation = 'params') => (req, res, next) => {
-
   // If no user is logged in, deny them
   if (!req.auth.user || !req.auth.user.id) {
     throw new UnauthorizedError()
@@ -17,7 +16,7 @@ module.exports = (allowAdmin = false, propName = 'id', propLocation = 'params') 
   let userId = req[propLocation][propName]
 
   // If the current user matches the userId, allow them
-  const authorized = userId == req.auth.user.id
+  let authorized = userId === req.auth.user.id
 
   // If admins are allowed and the current user is admin, allow them
   if (allowAdmin && req.auth.user.admin) {

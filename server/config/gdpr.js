@@ -2,7 +2,7 @@ const bunyan = require('bunyan')
 const fs = require('fs')
 const path = require('path')
 const moment = require('moment')
-const config = reuqire('./config')
+const config = require('./config')
 
 const GDPRLog = require('../models/gdprLog')
 
@@ -44,7 +44,7 @@ module.exports.log = bunyan.createLogger({
 
 /**
  * Report an event to the GDPR log system.
- * 
+ *
  * @param {Object} req The current request
  * @param {String} location The location from where the call was made
  * @param {String} message What happened?
@@ -52,11 +52,10 @@ module.exports.log = bunyan.createLogger({
  * @param {Object} [error] Any potential error that occurred
  */
 module.exports.report = (req, location, message, user, error) => {
-
   let session = null
 
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
-    session = req.headers.authorization.split(' ')[1];
+    session = req.headers.authorization.split(' ')[1]
   }
 
   let ip = req.headers['x-forwarded-for'] ||
@@ -70,27 +69,30 @@ module.exports.report = (req, location, message, user, error) => {
     error: error,
     caller: _getCallerFile(),
     ip: ip,
-    session: session,
+    session: session
   }, message)
 }
 
 /**
  * Get calling file. Useful for debugging and very short stack traces.
  */
-function _getCallerFile() {
+function _getCallerFile () {
   var originalFunc = Error.prepareStackTrace
 
   var callerfile
   try {
-    var err = new Error()
+    var thisErr = new Error()
     var currentfile
 
-    Error.prepareStackTrace = function (err, stack) { return stack }
+    Error.prepareStackTrace = function (err, stack) {
+      if (err) { }
+      return stack
+    }
 
-    currentfile = err.stack.shift().getFileName()
+    currentfile = thisErr.stack.shift().getFileName()
 
-    while (err.stack.length) {
-      callerfile = err.stack.shift().getFileName()
+    while (thisErr.stack.length) {
+      callerfile = thisErr.stack.shift().getFileName()
 
       if (currentfile !== callerfile) break
     }

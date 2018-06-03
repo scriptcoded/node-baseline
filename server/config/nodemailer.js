@@ -10,7 +10,7 @@ module.exports.transporter = nodemailer.createTransport(
     port: 587,
     auth: {
       user: '',
-      pass: '',
+      pass: ''
     }
   },
   {

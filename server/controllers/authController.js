@@ -1,12 +1,11 @@
 const passport = require('passport')
-const mongoose = require('mongoose')
 const async = require('async')
 const crypto = require('crypto')
 const compare = require('node-version-compare')
 
 const config = require('../config/config')
 
-const { body, validationResult } = require('express-validator/check')
+const { body } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
 
 const log = require('../config/log')
@@ -21,13 +20,10 @@ const User = require('../models/user')
 
 const {
   ApiError,
-  NotFoundError,
-  ValidationError,
   ServerError,
   InvalidTokenError,
   NotActiveError,
-  UnauthorizedError,
-  TOSNotAcceptedError,
+  UnauthorizedError
 } = require('../errors/apiErrors/apiErrors')
 
 const FieldError = require('../errors/FieldError')
@@ -120,7 +116,6 @@ module.exports.register = [
   sendValidationErrors(),
 
   (req, res, next) => {
-
     /**
      * Create new user object
      */
@@ -128,12 +123,12 @@ module.exports.register = [
       email: req.body.email,
       name: {
         familyName: req.body.familyName,
-        givenName: req.body.givenName,
+        givenName: req.body.givenName
       },
       tosAgreement: {
         agreed: true,
         updatedAt: new Date(),
-        version: req.body.tosAcceptedVersion,
+        version: req.body.tosAcceptedVersion
       }
     })
 
@@ -173,7 +168,7 @@ module.exports.register = [
           /**
            * Activation link
            */
-          let activationLink = config.email.activationLink.format(user.email, user.emailVerificationToken)
+          let activationLink = config.email.activationLink.format(req.headers.host, user.email, user.emailVerificationToken)
 
           /**
            * Send activation email. Uses email helper method.
@@ -229,7 +224,6 @@ module.exports.login = [
   sendValidationErrors(),
 
   (req, res, next) => {
-
     /**
      * Try authenticating user
      */
@@ -314,7 +308,6 @@ module.exports.sendPasswordLink = [
   sendValidationErrors(),
 
   (req, res, next) => {
-
     /**
      * This waterfall should probably change.
      * There is no need to generate the token
@@ -358,7 +351,6 @@ module.exports.sendPasswordLink = [
         })
       },
       (token, user, done) => {
-
         /**
          * If a user was found, send email
          */
@@ -369,15 +361,15 @@ module.exports.sendPasswordLink = [
            */
           email.getTemplate('password/reset', {
             name: user.name.givenName,
-            resetLink: config.email.resetPasswordLink.format(user.email, token),
+            resetLink: config.email.resetPasswordLink.format(req.headers.host, user.email, token),
             contactEmail: 'test@example.com',
             contactWebsite: 'https://example.com/',
-            contactWebsitePretty: 'example.com',
+            contactWebsitePretty: 'example.com'
           }).then(message => {
             var mailOptions = {
               to: user.email,
               subject: 'Test återställ lösenord',
-              html: message,
+              html: message
             }
             mailer.transporter.sendMail(mailOptions, function (err) {
               done(err)
@@ -438,7 +430,7 @@ module.exports.resetPassword = [
     User.findOne({
       email: req.body.email,
       'passwordReset.token': req.body.token,
-      'passwordReset.expires': { $gte: new Date() },
+      'passwordReset.expires': { $gte: new Date() }
     }, (err, user) => {
       if (err) { return next(err) }
 
@@ -498,7 +490,7 @@ module.exports.activateEmail = [
      */
     User.findOne({
       email: req.body.email,
-      emailVerificationToken: req.body.token,
+      emailVerificationToken: req.body.token
     }, (err, user) => {
       if (err) { return next(err) }
 

@@ -4,13 +4,12 @@ const readline = require('readline')
 
 /**
  * Validates the .env file and checks it against .env.example
- * 
+ *
  * @param {*} envPath Path to the .env file
  * @param {*} examplePath Path to the .env.example file
  */
 module.exports.validateEnvFile = (envPath, examplePath) => {
   return new Promise((resolve, reject) => {
-
     let requiredKeys = []
     /**
      * Variables already in environment
@@ -28,6 +27,10 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
      * Load .env.example lines into requiredKeys
      */
     exampleReader.on('line', line => {
+      if (line.trim()[0] === '#') {
+        return
+      }
+
       let key = line.split('=')[0]
 
       if (key) {
@@ -42,7 +45,7 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
       let envReader = readline.createInterface({
         input: fs.createReadStream(envPath)
       })
-  
+
       /**
        * Load .env lines into foundKeys
        */
@@ -52,19 +55,18 @@ module.exports.validateEnvFile = (envPath, examplePath) => {
         if (!parts[1]) {
           return
         }
-  
+
         if (parts[0]) {
           foundKeys.add(parts[0])
         }
       })
-  
+
       /**
        * When finished, make sure that all required keys were found
        */
       envReader.on('close', () => {
-        
         var missingKeys = requiredKeys.filter(item => {
-          return !foundKeys.has(item);
+          return !foundKeys.has(item)
         })
 
         /**
@@ -91,10 +93,10 @@ module.exports.validateEnv = () => {
   let hasEnv = fs.existsSync(envPath)
   let hasExample = fs.existsSync(examplePath)
 
-  if ((process.env.NODE_ENV || '').trim() != 'production' && !hasEnv) {
+  if ((process.env.NODE_ENV || '').trim() !== 'production' && !hasEnv) {
     throw new Error('Missing .env file')
   }
-  
+
   if (hasExample) {
     module.exports.validateEnvFile(envPath, examplePath).catch(err => {
       console.error(err)

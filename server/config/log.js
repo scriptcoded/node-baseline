@@ -9,7 +9,7 @@ const logsDir = config.logsDir
  * Create logs dir if not present
  */
 if (!fs.existsSync(logsDir)) {
-  fs.mkdirSync(logsDir);
+  fs.mkdirSync(logsDir)
 }
 
 let log

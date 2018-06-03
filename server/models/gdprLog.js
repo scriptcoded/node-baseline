@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 /**
  * Schema for GDPR logs
  */
-var gdprLogSchema = new mongoose.Schema({
+var gdprLogSchema = new Schema({
   user: Object,
   location: String,
   error: Object,
@@ -26,9 +26,9 @@ var gdprLogSchema = new mongoose.Schema({
   time: {
     type: Date,
     required: true
-  },
+  }
 }, {
   timestamps: true
-});
+})
 
-module.exports = mongoose.model('GDPRLog', gdprLogSchema);
+module.exports = mongoose.model('GDPRLog', gdprLogSchema)

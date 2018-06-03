@@ -1,4 +1,5 @@
-const expect = require('chai').expect
+/* global describe, beforeEach, afterEach,  it */
+
 const sinon = require('sinon')
 const request = require('supertest')
 
@@ -8,14 +9,12 @@ const app = require('../server')
 
 const User = require('../server/models/user')
 
-const api = require('../server/routes/api')
 const apiUrl = '/api/v1/'
 
 const testHelper = require('../server/helpers/test')
 const {expectError, expectResponse, logError} = testHelper
 
 describe('Auth controller', () => {
-
   beforeEach(() => {
     sandbox.stub(User, 'find')
     sandbox.stub(User, 'findOne')
@@ -33,7 +32,6 @@ describe('Auth controller', () => {
   })
 
   describe('Login', () => {
-
     it('Responds with 200 on correct credentials', done => {
       let user = testHelper.mockUser()
 
@@ -65,7 +63,6 @@ describe('Auth controller', () => {
     })
 
     it('Responds with 404 on invalid password', done => {
-
       let user = testHelper.mockUser()
 
       User.findOne.yields(null, user)
@@ -132,7 +129,6 @@ describe('Auth controller', () => {
           done()
         })
     })
-
   })
 
   describe('Register', () => {

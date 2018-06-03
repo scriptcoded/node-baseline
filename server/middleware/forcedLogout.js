@@ -1,7 +1,5 @@
 const User = require('../models/user')
 
-const log = require('../config/log')
-
 const {
   UnauthorizedError
 } = require('../errors/apiErrors/apiErrors')
@@ -10,7 +8,6 @@ const {
  * Handles forced logout.
  */
 module.exports = excluded => (req, res, next) => {
-
   /**
    * If current url is in the excluded list, ignore this check
    */
@@ -24,7 +21,7 @@ module.exports = excluded => (req, res, next) => {
    * If not authenticated, deny them
    */
   if (!req.auth || !req.auth.user) {
-    return next(new UnauthorizedError)
+    return next(new UnauthorizedError())
   }
 
   /**
@@ -37,7 +34,7 @@ module.exports = excluded => (req, res, next) => {
      * If no user is found, deny them
      */
     if (!user) {
-      return next(new UnauthorizedError)
+      return next(new UnauthorizedError())
     }
 
     /**
@@ -45,7 +42,7 @@ module.exports = excluded => (req, res, next) => {
      * This flag will be reset upon login.
      */
     if (user.forcedLogout) {
-      return next(new UnauthorizedError)
+      return next(new UnauthorizedError())
     }
 
     next()
