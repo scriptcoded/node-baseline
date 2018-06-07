@@ -9,11 +9,11 @@ module.exports.transporter = nodemailer.createTransport(
     host: 'imap.ethereal.email',
     port: 587,
     auth: {
-      user: '',
-      pass: ''
+      user: process.env.NODEMAILER_USER,
+      pass: process.env.NODEMAILER_PASS
     }
   },
   {
-    from: 'Test <test@example.com>'
+    from: `Test <${process.env.NODEMAILER_USER}>`
   }
 )

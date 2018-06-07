@@ -133,19 +133,25 @@ app.use(jwt({
 /**
  * Enable forced logout. Won't force logout on routes defined here.
  */
-app.use(forcedLogout([].concat([
+app.use(forcedLogout([].concat(
   noAuthRoutes
-])))
+)))
 
 /**
  * Require acceptance of Terms of Service. Won't lock on routes defined here.
  */
-app.use(requireTos([].concat([
+app.use(requireTos([].concat(
   noAuthRoutes
-])))
+)))
 
 /**
- * Set our api routes
+ * TODO:
+ * Implement fallback for /api without version.
+ * Should list all avaiable versions.
+ */
+
+/**
+ * Set our API routes
  */
 app.use(apiUrl, api.router)
 

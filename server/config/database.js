@@ -1,8 +1,6 @@
 const mongoose = require('mongoose')
 const dbURI = process.env.MONGODB_URI
 
-// const userSchema = require('./user')
-
 let gracefulShutdown
 
 mongoose.connect(dbURI)
@@ -45,5 +43,9 @@ process.on('SIGTERM', function () {
   })
 })
 
-// BRING IN YOUR SCHEMAS & MODELS
-// mongoose.model('User', userSchema)
+/**
+ * Optionally bring in your Mongoose models and schemas
+ * here. The model definitions are currently done within
+ * each model file, but for easier loading, you might
+ * want to move it here.
+ */

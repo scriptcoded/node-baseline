@@ -7,11 +7,14 @@ const shell = require('shelljs')
 const User = require('../models/user')
 
 const { send } = require('../helpers/response')
+
 const protect = require('../middleware/protect')
 const sendValidationErrors = require('../middleware/sendValidationErrors')
 const validId = require('../middleware/validId')
+const limitMethods = require('../middleware/limitMethods')
 
 const { NotFoundError, ValidationError } = require('../errors/apiErrors/apiErrors')
+
 const avatarDir = path.resolve('./uploads/avatars')
 
 if (!fs.existsSync(avatarDir)) {
@@ -21,6 +24,8 @@ if (!fs.existsSync(avatarDir)) {
 module.exports.show = [
 
   protect(true),
+
+  limitMethods(),
 
   param('id')
     .isLength({ min: 1 }).withMessage({ code: 'required', text: 'ID is required' }),
@@ -44,6 +49,8 @@ module.exports.show = [
 
 module.exports.getAvatar = [
 
+  limitMethods(),
+
   param('id')
     .isLength({ min: 1 }).withMessage({ code: 'required', text: 'ID is required' }),
 
@@ -65,6 +72,8 @@ module.exports.getAvatar = [
 ]
 
 module.exports.updateAvatar = [
+
+  limitMethods(),
 
   sendValidationErrors(),
 

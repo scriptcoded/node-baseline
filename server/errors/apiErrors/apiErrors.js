@@ -13,5 +13,6 @@ module.exports = {
   ValidationError: require('./ValidationError'),
   InvalidTokenError: require('./InvalidTokenError'),
   NotActiveError: require('./NotActiveError'),
-  TOSNotAcceptedError: require('./TOSNotAcceptedError')
+  TOSNotAcceptedError: require('./TOSNotAcceptedError'),
+  MethodNotAllowedError: require('./MethodNotAllowedError')
 }

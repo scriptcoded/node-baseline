@@ -1,11 +1,13 @@
 const express = require('express')
-const router = express.Router()
+const expressRouter = express.Router()
 
 const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
 const metaController = require('../controllers/metaController')
 
 const { NotFoundError } = require('../errors/apiErrors/apiErrors')
+
+const router = require('../helpers/catchingRouter')(expressRouter)
 
 /**
  * All routes should be placed within this file.
@@ -93,7 +95,7 @@ module.exports = app => {
    * that shouldn't require authentication.
    */
   return {
-    router: router,
+    router: expressRouter,
     noAuthRoutes: noAuthRoutes,
     noAuthRoutesRegex: noAuthRoutesRegex
   }

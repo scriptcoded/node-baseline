@@ -2,19 +2,21 @@ const passport = require('passport')
 const async = require('async')
 const crypto = require('crypto')
 const compare = require('node-version-compare')
+const { sprintf } = require('sprintf-js')
 
 const config = require('../config/config')
+const log = require('../config/log')
+const { report } = require('../config/gdpr')
+const mailer = require('../config/nodemailer')
 
 const { body } = require('express-validator/check')
 const { sanitizeBody } = require('express-validator/filter')
 
-const log = require('../config/log')
-const { report } = require('../config/gdpr')
-
 const { send } = require('../helpers/response')
-const sendValidationErrors = require('../middleware/sendValidationErrors')
-const mailer = require('../config/nodemailer')
 const email = require('../helpers/email')
+
+const sendValidationErrors = require('../middleware/sendValidationErrors')
+const limitMethods = require('../middleware/limitMethods')
 
 const User = require('../models/user')
 
@@ -32,6 +34,8 @@ const FieldError = require('../errors/FieldError')
  * Register new user
  */
 module.exports.register = [
+
+  limitMethods(),
 
   /**
    * Validate email
@@ -168,7 +172,7 @@ module.exports.register = [
           /**
            * Activation link
            */
-          let activationLink = config.email.activationLink.format(req.headers.host, user.email, user.emailVerificationToken)
+          let activationLink = sprintf(config.email.activationLink, req.headers.host, user.email, user.emailVerificationToken)
 
           /**
            * Send activation email. Uses email helper method.
@@ -196,6 +200,8 @@ module.exports.register = [
  * Log in user
  */
 module.exports.login = [
+
+  limitMethods(),
 
   /**
    * Validate email
@@ -296,6 +302,8 @@ module.exports.login = [
  */
 module.exports.sendPasswordLink = [
 
+  limitMethods(),
+
   /**
    * Validate email
    */
@@ -356,12 +364,11 @@ module.exports.sendPasswordLink = [
          */
         if (user) {
           /**
-           * Get email template and send email. Reset
-           * link format should probably be in config.
+           * Get email template and send email.
            */
           email.getTemplate('password/reset', {
             name: user.name.givenName,
-            resetLink: config.email.resetPasswordLink.format(req.headers.host, user.email, token),
+            resetLink: sprintf(config.email.resetPasswordLink, req.headers.host, user.email, token),
             contactEmail: 'test@example.com',
             contactWebsite: 'https://example.com/',
             contactWebsitePretty: 'example.com'
@@ -395,6 +402,8 @@ module.exports.sendPasswordLink = [
  * Reset password
  */
 module.exports.resetPassword = [
+
+  limitMethods(),
 
   /**
    * Validate email
@@ -467,6 +476,8 @@ module.exports.resetPassword = [
  */
 module.exports.activateEmail = [
 
+  limitMethods(),
+
   /**
    * Validate email
    */
@@ -526,6 +537,8 @@ module.exports.activateEmail = [
  * Resend activation email
  */
 module.exports.resendActivationEmail = [
+
+  limitMethods(),
 
   /**
    * Validate email
